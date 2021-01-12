@@ -19,16 +19,16 @@ console.log("%cWelcome to the ToDo Application!", style1);
 console.log("%cHere are the list of commands:\nnew - add a todo\nlist - list todos\ndelete - remove todo\nquit - quit the app", style1);
 userInput = prompt("Welcome to the Todo Application.\nWhat would you like to do?");
 
-while (userInput.toLowerCase() != "quit")
+while (userInput.toLowerCase().trim() !== "quit")
 {
-    if (userInput.toLowerCase() == "new")
+    if (userInput.toLowerCase().trim() === "new")
     {
         userInput = prompt("Enter new todo.");
         userToDoList.push(userInput);
         console.log(`%c${userInput} added to the list`, style2);
         userInput = prompt("What would you like to do?")
     }
-    else if (userInput.toLowerCase() == "list")
+    else if (userInput.toLowerCase().trim() === "list")
     {
         console.log("%c--------------------", style2);
         for (let index = 0; index < userToDoList.length; index++)
@@ -38,18 +38,23 @@ while (userInput.toLowerCase() != "quit")
         console.log("%c--------------------", style2);
         userInput = prompt("What would you like to do?")
     }
-    else  if (userInput.toLowerCase() == "delete")
+    else  if (userInput.toLowerCase().trim() === "delete")
     {
-        let userRemovedItem;
+        let userRemovedItem, indexOfItem;
 
         userInput = prompt("Enter index of todo to delete.");
-        while (userInput > userToDoList.length - 1)
+        indexOfItem = parseInt(userInput);
+
+        if (indexOfItem < userToDoList.length)
         {
-            userInput = prompt("That is not on your list. Enter a valid index.");
+            userRemovedItem = userToDoList.splice(indexOfItem, 1);
+            console.log(`%c${userRemovedItem} is removed from the list.`, style2);
+
+            userInput = prompt("What would you like to do?");
         }
-        userRemovedItem = userToDoList.splice(userInput, 1);
-        console.log(`%c${userRemovedItem} is removed from the list.`, style2);
-        userInput = prompt("What would you like to do?")
+        else{
+            userInput = prompt("That is not a valid index. No item was deleted.\nWhat would you like to do?");
+        }
     }
     else {
         userInput = prompt("I don't understand your command. What would you like to do?");
